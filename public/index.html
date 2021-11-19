@@ -10,12 +10,6 @@
   <meta name="Description" content="Enter your description here" />
   <title>16 Faders</title>
   <style>
-    .myBtn {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-
-    }
 
     .slidecontainer {
       display: flex;
@@ -92,7 +86,7 @@
     <select name="Midi Output" id="out">
     </select>
   </div>
-  <button id="myBtn">Controls</button>
+  <button id="btn">Controls</button>
   <br>
 
   <div class="slidecontainer">
@@ -178,17 +172,7 @@
   </script>
 
   <script>
-
-
     WebMidi.enable(function (err) {
-
-
-
-
-
-
-      console.log("original")
-
       var slider1 = document.getElementById("myRange1");
       var slider2 = document.getElementById("myRange2");
       var slider3 = document.getElementById("myRange3");
@@ -216,7 +200,6 @@
           slider.value = e.value
         }
       );
-
 
       const keyHandlers = {
         "Digit1": {slider: slider1, direction: 1},
@@ -272,8 +255,6 @@
         }
       });
 
-
-
       function onInputChange(e) {
         var new_out = WebMidi.getOutputByName(localStorage.getItem('midiOut'))
         new_out.sendControlChange(Number(e.target.dataset.cc), e.target.value)
@@ -316,13 +297,9 @@
       if (event.target == modal) {
         modal.style.display = "none";
       }
-    }
-
-
+    };
 
   </script>
-
-
 
 </body>
 
