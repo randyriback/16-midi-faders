@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/webmidi"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="Description" content="Enter your description here" />
+  <title>16 Faders</title>
+  <style>
+    .myBtn {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+    }
+
+    .slidecontainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      -webkit-transform: rotate(-90deg);
+      -moz-transform: rotate(-90deg);
+      -o-transform: rotate(-90deg);
+      -ms-transform: rotate(-90deg);
+      transform: rotate(-90deg);
+    }
+
+    kbd {
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 2px 0 0 rgba(255, 255, 255, .7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: .85em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+
+    .slidecontainer input {
+      padding: 10px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 100px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="select">
+    <label>Choose Midi Output:</label>
+    <select name="Midi Output" id="out">
+    </select>
+  </div>
+  <button id="myBtn">Controls</button>
+  <br>
+
+  <div class="slidecontainer">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange1" data-cc="1">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange2" data-cc="2">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange3" data-cc="3">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange4" data-cc="4">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange5" data-cc="5">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange6" data-cc="6">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange7" data-cc="7">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange8" data-cc="8">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange9" data-cc="9">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange10" data-cc="10">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange11" data-cc="11">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange12" data-cc="12">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange13" data-cc="13">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange14" data-cc="14">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange15" data-cc="15">
+    <input type="range" min="1" max="127" value="50" class="slider" id="myRange16" data-cc="16">
+  </div>
+
+  <div id="myModal" class="modal">
+
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>16 Assignable Faders for Your DAW</h2>
+      <h3>Optionally hold <kbd>shift</kbd> to fine-tune faders with the following commands:
+        <p>
+          <kbd>1</kbd> and <kbd>q</kbd> - Fader 1
+          <br>
+          <kbd>2</kbd> and <kbd>w</kbd> - Fader 2
+          <br>
+          <kbd>3</kbd> and <kbd>e</kbd> - Fader 3
+          <br>
+          <kbd>4</kbd> and <kbd>r</kbd> - Fader 4
+          <br>
+          <kbd>5</kbd> and <kbd>t</kbd> - Fader 5
+          <br>
+          <kbd>6</kbd> and <kbd>y</kbd> - Fader 6
+          <br>
+          <kbd>7</kbd> and <kbd>u</kbd> - Fader 7
+          <br>
+          <kbd>8</kbd> and <kbd>i</kbd> - Fader 8
+          <br>
+          <kbd>a</kbd> and <kbd>z</kbd> - Fader 9
+          <br>
+          <kbd>s</kbd> and <kbd>x</kbd> - Fader 10
+          <br>
+          <kbd>d</kbd> and <kbd>c</kbd> - Fader 11
+          <br>
+          <kbd>f</kbd> and <kbd>v</kbd> - Fader 12
+          <br>
+          <kbd>g</kbd> and <kbd>b</kbd> - Fader 13
+          <br>
+          <kbd>h</kbd> and <kbd>n</kbd> - Fader 14
+          <br>
+          <kbd>j</kbd> and <kbd>m</kbd> - Fader 15
+          <br>
+          <kbd>k</kbd> and <kbd>,</kbd> - Fader 16
+          <br>
+        </p>
+    </div>
+
+  </div>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAJXzD64k8lZLC9z1-Rsu4rW9feBULC860",
+      authDomain: "faders16.firebaseapp.com",
+      projectId: "faders16",
+      storageBucket: "faders16.appspot.com",
+      messagingSenderId: "981780953802",
+      appId: "1:981780953802:web:71df45d8a1ddb797de1233"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
+
+  <script>
+
+
+    WebMidi.enable(function (err) {
+
+
+
+
+
+
+      console.log("original")
+
+      var slider1 = document.getElementById("myRange1");
+      var slider2 = document.getElementById("myRange2");
+      var slider3 = document.getElementById("myRange3");
+      var slider4 = document.getElementById("myRange4");
+      var slider5 = document.getElementById("myRange5");
+      var slider6 = document.getElementById("myRange6");
+      var slider7 = document.getElementById("myRange7");
+      var slider8 = document.getElementById("myRange8");
+      var slider9 = document.getElementById("myRange9");
+      var slider10 = document.getElementById("myRange10");
+      var slider11 = document.getElementById("myRange11");
+      var slider12 = document.getElementById("myRange12");
+      var slider13 = document.getElementById("myRange13");
+      var slider14 = document.getElementById("myRange14");
+      var slider15 = document.getElementById("myRange15");
+      var slider16 = document.getElementById("myRange16");
+
+      var select = document.getElementById('out');
+      var input = WebMidi.getInputByName(localStorage.getItem('midiOut'))
+
+      input.addListener('controlchange', "all",
+        e => {
+          const cc = e.controller.number
+          const slider = document.querySelector(`[data-cc="${cc}"]`)
+          slider.value = e.value
+        }
+      );
+
+
+      const keyHandlers = {
+        "Digit1": {slider: slider1, direction: 1},
+        "Digit2": {slider: slider2, direction: 1},
+        "Digit3": {slider: slider3, direction: 1},
+        "Digit4": {slider: slider4, direction: 1},
+        "Digit5": {slider: slider5, direction: 1},
+        "Digit6": {slider: slider6, direction: 1},
+        "Digit7": {slider: slider7, direction: 1},
+        "Digit8": {slider: slider8, direction: 1},
+        "KeyA": {slider: slider9, direction: 1},
+        "KeyS": {slider: slider10, direction: 1},
+        "KeyD": {slider: slider11, direction: 1},
+        "KeyF": {slider: slider12, direction: 1},
+        "KeyG": {slider: slider13, direction: 1},
+        "KeyH": {slider: slider14, direction: 1},
+        "KeyJ": {slider: slider15, direction: 1},
+        "KeyK": {slider: slider16, direction: 1},
+        "KeyQ": {slider: slider1, direction: -1},
+        "KeyW": {slider: slider2, direction: -1},
+        "KeyE": {slider: slider3, direction: -1},
+        "KeyR": {slider: slider4, direction: -1},
+        "KeyT": {slider: slider5, direction: -1},
+        "KeyY": {slider: slider6, direction: -1},
+        "KeyU": {slider: slider7, direction: -1},
+        "KeyI": {slider: slider8, direction: -1},
+        "KeyZ": {slider: slider9, direction: -1},
+        "KeyX": {slider: slider10, direction: -1},
+        "KeyC": {slider: slider11, direction: -1},
+        "KeyV": {slider: slider12, direction: -1},
+        "KeyB": {slider: slider13, direction: -1},
+        "KeyN": {slider: slider14, direction: -1},
+        "KeyM": {slider: slider15, direction: -1},
+        "Comma": {slider: slider16, direction: -1},
+      }
+
+
+      document.addEventListener('keydown', function (event) {
+        var new_out = WebMidi.getOutputByName(localStorage.getItem('midiOut'))
+        console.log(new_out)
+        var increment = 7
+
+        if (event.shiftKey) {
+          increment = 1
+        }
+
+        var handler = keyHandlers[event.code]
+
+        if (handler) {
+          const {slider, direction} = handler
+          slider.value = Number(slider.value) + direction * increment
+          new_out.sendControlChange(Number(slider.dataset.cc), slider.value)
+        }
+      });
+
+
+
+      function onInputChange(e) {
+        var new_out = WebMidi.getOutputByName(localStorage.getItem('midiOut'))
+        new_out.sendControlChange(Number(e.target.dataset.cc), e.target.value)
+      };
+
+      const sliders = document.querySelectorAll('[data-cc]')
+
+      for (let slider of sliders){
+      slider.oninput = onInputChange
+      };
+
+
+      for (let i = 0; i < WebMidi.outputs.length; i++) {
+        var opt = document.createElement("option")
+        opt.value = WebMidi.outputs[i]._midiOutput.name;
+        opt.innerHTML = WebMidi.outputs[i]._midiOutput.name;
+        select.appendChild(opt);
+      }
+
+      select.oninput = function () {
+        localStorage.setItem('midiOut', this.value);
+        console.log(localStorage.getItem('midiOut'))
+      }
+
+    });
+
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function () {
+      modal.style.display = "block";
+    }
+
+    span.onclick = function () {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>
