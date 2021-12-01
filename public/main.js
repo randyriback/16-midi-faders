@@ -113,6 +113,7 @@ WebMidi.enable(function (err) {
   let btn = document.getElementById("button");
   let span = document.getElementsByClassName("close")[0];
   let doc = document.getElementsByTagName("BODY")
+  let top = document.getElementsByClassName("top")[0]
 
   btn.onclick = function () {
     modal.style.display = "block";
@@ -124,7 +125,7 @@ WebMidi.enable(function (err) {
   };
 
   window.onclick = function (event) {
-    if (event.target === modal) {
+    if (event.target === modal || event.target === top) {
       modal.style.display = "none";
     }
   };
